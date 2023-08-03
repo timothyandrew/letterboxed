@@ -1,24 +1,26 @@
 import { loadDictionary } from '@/lib/dictionary';
+import findOrder from '@/lib/order';
 import solve from '@/lib/solve';
+import _ from 'lodash';
 
 export default async function Home() {
   const dictionary = await loadDictionary();
   const sides = [
-    ['S', 'U', 'P'],
-    ['O', 'A', 'M'],
-    ['N', 'R', 'Y'],
-    ['C', 'T', 'I'],
+    ['A', 'I', 'G'],
+    ['E', 'Y', 'S'],
+    ['Q', 'W', 'R'],
+    ['N', 'L', 'U'],
   ]
 
-  const solved = solve(sides, dictionary);
+  let solved = solve(sides, dictionary);
+  let ordered = findOrder(solved);
 
   return (
     <div>
-      HELLO
+      Found {ordered.length} words
       <ul>
-        {solved.map(w => <li key={w}>
-          {w.word}
-          {w.uniq.length}
+        {ordered.map(run => <li key={run}>
+          {run.join(" → ")}
         </li>)}
       </ul>
     </div>
